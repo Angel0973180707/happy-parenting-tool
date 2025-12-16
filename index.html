@@ -2,45 +2,36 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#d86b4a" />
 
-  <title>幸福教養｜模組 1 大人先穩</title>
+  <title>幸福教養｜模組1 大人先穩</title>
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" href="icons/icon-192.png" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
-
 <body>
-  <div class="app">
 
-    <!-- Header -->
+  <div class="app">
     <header class="top">
       <div class="brand">
-
         <div class="kicker">幸福教養｜不打不罵不氣</div>
-
         <h1>模組 1｜大人先穩</h1>
-
         <p class="sub">不用威嚇｜以愛連結｜先穩住，再說</p>
 
-        <!-- 安裝提示（純說明，不影響 PWA） -->
-        <div class="install-hint">
-          📱 建議安裝使用：<br />
-          安卓手機 → Chrome／三星網路「加入主畫面」<br />
-          iPhone → Safari「分享」→「加入主畫面」
+        <!-- ✅ 安裝提示（三星 / iPhone） -->
+        <div class="install-hint" role="note" aria-label="安裝提示">
+          📱 建議安裝到桌面使用：<br />
+          安卓手機 → Chrome／三星網路 →「加入主畫面」<br />
+          iPhone → Safari →「分享」→「加入主畫面」
         </div>
-
       </div>
 
       <div class="right">
         <div class="selectors">
-
           <div class="ageBar">
             <label class="ageLabel">孩子年齡：</label>
             <select id="ageGroup" class="ageSelect">
@@ -52,86 +43,356 @@
 
           <div class="ctxBar">
             <label class="ctxLabel">現在情境：</label>
-            <div class="ctxRow">
+            <div class="ctxRow" role="group" aria-label="情境切換">
               <button class="ctx active" data-ctx="home">🏠 家裡</button>
               <button class="ctx" data-ctx="out">🚶 外出</button>
               <button class="ctx" data-ctx="night">🌙 睡前</button>
             </div>
           </div>
-
         </div>
 
         <div class="quick">
-          <button class="btn primary installBtn" id="btnInstall" hidden>
-            安裝到桌面
-          </button>
+          <!-- ✅ 安裝提示鈕（PWA） -->
+          <button class="btn primary installBtn" id="btnInstall" hidden>安裝到桌面</button>
 
-          <button class="btn primary" id="btnOpenRescue">
-            我快撐不住了（急救）
-          </button>
-
-          <button class="btn ghost" id="btnStop">
-            停止
-          </button>
+          <button class="btn primary" id="btnOpenRescue">我快撐不住了（急救）</button>
+          <button class="btn ghost" id="btnStop">停止</button>
         </div>
       </div>
     </header>
 
-    <!-- Tabs -->
-    <nav class="tabs">
-      <button class="tab active" data-tab="t0">整合流程</button>
-      <button class="tab" data-tab="t1">穩定語錨點</button>
-      <button class="tab" data-tab="t2">角色回位</button>
-      <button class="tab" data-tab="t3">安全延後</button>
-      <button class="tab" data-tab="t4">等待位</button>
-      <button class="tab" data-tab="t5">錦囊妙計</button>
-      <button class="tab" data-tab="t6">微練功</button>
-      <button class="tab" data-tab="t7">每日自評</button>
+    <nav class="tabs" role="tablist" aria-label="Module 1 Tabs">
+      <button class="tab active" data-tab="t0" role="tab" aria-selected="true">整合流程</button>
+      <button class="tab" data-tab="t1" role="tab" aria-selected="false">穩定語錨點</button>
+      <button class="tab" data-tab="t2" role="tab" aria-selected="false">角色回位</button>
+      <button class="tab" data-tab="t3" role="tab" aria-selected="false">安全延後</button>
+      <button class="tab" data-tab="t4" role="tab" aria-selected="false">等待位</button>
+      <button class="tab" data-tab="t5" role="tab" aria-selected="false">錦囊妙計（急救）</button>
+      <button class="tab" data-tab="t6" role="tab" aria-selected="false">微練功</button>
+      <button class="tab" data-tab="t7" role="tab" aria-selected="false">每日自評</button>
     </nav>
 
-    <!-- Panels -->
-    <main class="panels">
+    <!-- 急救浮層 -->
+    <section class="overlay" id="overlay" aria-hidden="true">
+      <div class="overlayCard">
+        <div class="overlayTop">
+          <div>
+            <div class="overlayTitle">60 秒急救｜跟著做</div>
+            <div class="muted small" id="rescueMeta">年齡：小學｜情境：家裡</div>
+          </div>
+          <button class="x" id="btnClose" aria-label="關閉">✕</button>
+        </div>
 
-      <section class="panel active" id="t0">
+        <div class="countdown">
+          <div class="countNum" id="countNum">60</div>
+          <div class="bar"><span id="countBar"></span></div>
+        </div>
+        <div class="muted mini" id="countHint">現在只要撐完這 1 分鐘。先不要講道理。</div>
+
+        <div class="breath">
+          <div class="ring" id="ring"></div>
+          <div class="cue" id="cue">按「開始急救」跟著呼吸</div>
+        </div>
+
+        <div class="lineBox">
+          <div class="label">可照念一句話（會依年齡 × 情境建議，可自訂）</div>
+          <div class="quote" id="defaultLine">「我現在需要先穩一下，等一下我們再說。」</div>
+          <div class="mini" id="tipHint">提醒：同理＋界線＋承諾</div>
+
+          <div class="overlayBtns">
+            <button class="btn primary" id="btnStartRescue">開始急救</button>
+            <button class="btn ghost" id="btnCopyDefault">複製這句</button>
+          </div>
+        </div>
+
+        <div class="overlayBtns bottom">
+          <button class="btn ghost" id="btnStopRescue">停止急救</button>
+          <button class="btn ghost" id="btnClose2">關閉</button>
+        </div>
+      </div>
+    </section>
+
+    <main class="panels">
+      <!-- 0 整合流程 -->
+      <section class="panel active" id="t0" role="tabpanel">
         <div class="card">
           <h2>整合流程（現場照走）</h2>
-          <ol>
-            <li>刺激出現</li>
-            <li><strong>先穩住，再說</strong></li>
-            <li>角色回位</li>
-            <li>安全延後</li>
-            <li>等待位</li>
-            <li>回來處理</li>
+          <p class="muted">你只要做對順序，就會穩。不是完美，是可重複。</p>
+
+          <ol class="flow">
+            <li><span class="dot">1</span> 刺激出現（孩子哭/吵/頂嘴/失控）</li>
+            <li><span class="dot">2</span> <strong>先穩住，再說</strong>（呼吸 4/6 × 2）</li>
+            <li><span class="dot">3</span> <strong>我是教養者，不是對手</strong>（角色回位）</li>
+            <li><span class="dot">4</span> <strong>安全延後語句</strong>（不在高張力談）</li>
+            <li><span class="dot">5</span> <strong>孩子安全等待位</strong>（給落點、關係不斷線）</li>
+            <li><span class="dot">6</span> 回來處理（界線/合作/修復）</li>
           </ol>
+
+          <div class="ctaRow">
+            <button class="btn primary" data-jump="t5">先準備「錦囊妙計（急救）」</button>
+            <button class="btn ghost" data-jump="t1">從穩定語錨點開始</button>
+          </div>
+        </div>
+
+        <div class="card soft">
+          <h3>你的「預設救場句」（可自訂）</h3>
+          <p class="muted">會顯示在急救浮層，也會被「錦囊急救」套用。</p>
+          <div class="setting">
+            <input id="favLine" class="input" placeholder="例：我先穩一下，等一下再談" />
+            <button class="btn primary" id="saveFav">儲存</button>
+            <button class="btn ghost" id="resetFav">恢復建議</button>
+          </div>
+          <div class="mini muted">若你不自訂，會依「年齡 × 情境」自動套用建議句。</div>
         </div>
       </section>
 
-      <section class="panel" id="t1"><div class="card"><h2>穩定語錨點</h2></div></section>
-      <section class="panel" id="t2"><div class="card"><h2>角色回位</h2></div></section>
-      <section class="panel" id="t3"><div class="card"><h2>安全延後</h2></div></section>
-      <section class="panel" id="t4"><div class="card"><h2>等待位</h2></div></section>
-      <section class="panel" id="t5"><div class="card"><h2>錦囊妙計</h2></div></section>
-      <section class="panel" id="t6"><div class="card"><h2>微練功</h2></div></section>
-      <section class="panel" id="t7"><div class="card"><h2>每日自評</h2></div></section>
+      <!-- 1 -->
+      <section class="panel" id="t1" role="tabpanel">
+        <div class="card">
+          <h2>工具 1-1｜穩定語錨點</h2>
+          <p class="muted">先把自己拉回線上，才不會用情緒處理孩子。</p>
 
+          <div class="big">先穩住，再說</div>
+
+          <div class="grid">
+            <div class="miniCard">
+              <div class="miniTitle">身體（10 秒）</div>
+              <ul>
+                <li>吸 4 秒、吐 6 秒 × 2</li>
+                <li>腳踩地，感覺重量</li>
+                <li>放下肩膀</li>
+              </ul>
+            </div>
+            <div class="miniCard">
+              <div class="miniTitle">嘴巴（先不做）</div>
+              <ul>
+                <li>先不講道理</li>
+                <li>先不質問</li>
+                <li>先不定罪</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="quoteSet">
+            <div class="label">一鍵句（點一下＝複製＋套入急救句）</div>
+            <button class="chip" data-say="先穩住，再說。">先穩住，再說。</button>
+            <button class="chip" data-say="我先呼吸兩次，再處理。">我先呼吸兩次，再處理。</button>
+            <button class="chip" data-say="我可以穩住，我等一下再說。">我可以穩住，我等一下再說。</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="panel" id="t2" role="tabpanel">
+        <div class="card">
+          <h2>工具 1-2｜角色回位卡</h2>
+          <p class="muted">你的角色不是「贏」，而是「帶孩子回安全」。</p>
+
+          <div class="big">我是教養者，不是對手</div>
+
+          <div class="grid">
+            <div class="miniCard">
+              <div class="miniTitle">自問 2 秒</div>
+              <ul>
+                <li>我現在是想「教」？還是想「贏」？</li>
+                <li>我是在保護關係？還是在輸出情緒？</li>
+              </ul>
+            </div>
+            <div class="miniCard">
+              <div class="miniTitle">回位一句</div>
+              <ul>
+                <li>「我先回到大人的位置。」</li>
+                <li>「我可以清楚，也可以溫柔。」</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="quoteSet">
+            <div class="label">一鍵句（點一下＝複製＋套入急救句）</div>
+            <button class="chip" data-say="我先回到大人的位置。">我先回到大人的位置。</button>
+            <button class="chip" data-say="我不跟你吵，我會帶你回安全。">我不跟你吵，我會帶你回安全。</button>
+            <button class="chip" data-say="我是教養者，不是對手。">我是教養者，不是對手。</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="panel" id="t3" role="tabpanel">
+        <div class="card">
+          <h2>工具 1-3｜安全延後語句</h2>
+          <p class="muted">延後不是逃避，是為了不在高張力談重要的事。</p>
+
+          <div class="big">先停一下，等我穩好再談</div>
+
+          <div class="quoteSet">
+            <div class="label">一鍵延後（點一下＝複製＋套入急救句）</div>
+            <button class="chip" data-say="我知道你很難受，現在我們先不談，等我穩好再一起處理。">
+              我知道你很難受…等我穩好再一起處理
+            </button>
+            <button class="chip" data-say="這件事很重要，我不想用生氣處理，我們等一下再說。">
+              這件事很重要…我不想用生氣處理
+            </button>
+            <button class="chip" data-say="我在，我沒有不要你。我先穩一下，等一下回來。">
+              我在…我沒有不要你…等一下回來
+            </button>
+          </div>
+
+          <div class="miniCard">
+            <div class="miniTitle">結構（你就記這個）</div>
+            <ol>
+              <li>我看見你（同理）</li>
+              <li>我需要先穩（界線）</li>
+              <li>我會回來（承諾）</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="panel" id="t4" role="tabpanel">
+        <div class="card">
+          <h2>工具 1-4｜孩子安全等待位</h2>
+          <p class="muted">不是處罰角落，是「情緒落點」。讓孩子有地方安放自己。</p>
+
+          <div class="big">不是不要你，我會回來</div>
+
+          <div class="grid">
+            <div class="miniCard">
+              <div class="miniTitle">等待位可以是</div>
+              <ul>
+                <li>沙發角落＋抱枕</li>
+                <li>房間喝水</li>
+                <li>畫畫 3 分鐘</li>
+                <li>抱玩偶／翻書</li>
+              </ul>
+            </div>
+            <div class="miniCard">
+              <div class="miniTitle">你要說清楚</div>
+              <ul>
+                <li>「你在這裡等」</li>
+                <li>「我會回來」</li>
+                <li>「等一下我們再處理」</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="quoteSet">
+            <div class="label">一鍵句（點一下＝複製＋套入急救句）</div>
+            <button class="chip" data-say="你先在安全的地方等一下，抱抱娃娃，我很快回來。">你先等一下…我很快回來</button>
+            <button class="chip" data-say="不是不要你，我會回來。你先坐這裡，等我們都穩一點。">不是不要你…等我們都穩一點</button>
+            <button class="chip" data-say="我先去穩一下，我會回來。你可以喝水、或坐著抱抱枕。">我先去穩一下…你可以喝水</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 Tips -->
+      <section class="panel" id="t5" role="tabpanel">
+        <div class="card">
+          <h2>錦囊妙計（可直接急救）</h2>
+          <p class="muted">點一個錦囊：①複製 ②套用急救句 ③直接進 60 秒急救。</p>
+
+          <div class="pillRow">
+            <button class="pill active" data-cat="all">全部</button>
+            <button class="pill" data-cat="panic">我快爆了</button>
+            <button class="pill" data-cat="cry">孩子哭</button>
+            <button class="pill" data-cat="fight">頂嘴/不合作</button>
+            <button class="pill" data-cat="public">公共/規範</button>
+          </div>
+
+          <div id="tipsWrap"></div>
+        </div>
+      </section>
+
+      <!-- 6 Practice -->
+      <section class="panel" id="t6" role="tabpanel">
+        <div class="card">
+          <h2>平日微練功（每天 1 分鐘）</h2>
+          <p class="muted">每天一點點，讓「穩」進到身體。會依年齡 × 情境抽句。</p>
+
+          <div class="miniCard">
+            <div class="miniTitle">今日練功句（自動抽一句）</div>
+            <div class="practiceLine" id="practiceLine">載入中…</div>
+
+            <div class="ctaRow">
+              <button class="btn primary" id="btnNewPractice">換一句</button>
+              <button class="btn ghost" id="btnCopyPractice">複製</button>
+              <button class="btn primary" id="btnDonePractice">我完成了 ✅</button>
+            </div>
+
+            <div class="mini muted" id="practiceStatus">今日尚未打卡</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 Quiz -->
+      <section class="panel" id="t7" role="tabpanel">
+        <div class="card">
+          <h2>每日自評（30 秒）</h2>
+          <p class="muted">不是評分，是讓你知道今天要用「哪一種策略」。</p>
+
+          <form id="dailyQuiz">
+            <div class="q"><label>1) 今天身體能量：</label>
+              <select name="q1" required>
+                <option value="">請選</option><option value="2">還可以</option><option value="1">有點累</option><option value="0">很累</option>
+              </select>
+            </div>
+            <div class="q"><label>2) 我比較容易：</label>
+              <select name="q2" required>
+                <option value="">請選</option><option value="2">能停一下再說</option><option value="1">會忍住但很悶</option><option value="0">容易馬上反應</option>
+              </select>
+            </div>
+            <div class="q"><label>3) 孩子一失控，我內心常出現：</label>
+              <select name="q3" required>
+                <option value="">請選</option><option value="2">我知道怎麼帶回來</option><option value="1">我不想爆但很難</option><option value="0">我需要立刻止血</option>
+              </select>
+            </div>
+            <div class="q"><label>4) 今天我最需要的是：</label>
+              <select name="q4" required>
+                <option value="">請選</option><option value="2">維持連結</option><option value="1">清楚界線</option><option value="0">先救我自己</option>
+              </select>
+            </div>
+            <div class="q"><label>5) 我願意做一個最小動作：</label>
+              <select name="q5" required>
+                <option value="">請選</option><option value="2">呼吸 4/6 × 2</option><option value="1">延後語句 1 次</option><option value="0">設定等待位</option>
+              </select>
+            </div>
+
+            <div class="ctaRow">
+              <button class="btn primary" type="submit">送出自評</button>
+              <button class="btn ghost" type="button" id="btnQuizHistory">查看最近 7 天</button>
+              <button class="btn ghost" type="button" id="btnQuizClear">清除紀錄</button>
+            </div>
+          </form>
+
+          <div class="resultBox" id="quizResult" hidden>
+            <div class="resultTitle">今日建議</div>
+            <div class="resultText" id="quizText"></div>
+            <div class="ctaRow">
+              <button class="btn primary" id="btnGoRescue">直接急救</button>
+              <button class="btn ghost" id="btnGoTips">去錦囊妙計</button>
+            </div>
+          </div>
+
+          <div class="historyBox" id="quizHistory" hidden></div>
+        </div>
+      </section>
     </main>
 
     <footer class="foot">
-      模組 1｜大人先穩｜PWA 可安裝
+      <span>模組 1｜大人先穩｜PWA（可安裝＋離線）</span>
     </footer>
 
-    <div class="toast" id="toast"></div>
-
+    <div class="toast" id="toast" aria-live="polite"></div>
   </div>
 
-  <!-- Scripts -->
-  <script src="app.js"></script>
+  <script src="./app.js"></script>
   <script>
+    // ✅ 註冊 Service Worker（PWA 核心）
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("sw.js");
+        navigator.serviceWorker.register("./sw.js");
       });
     }
   </script>
 </body>
-</html>
+  </html>

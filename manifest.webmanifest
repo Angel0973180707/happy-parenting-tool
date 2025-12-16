@@ -1,14 +1,22 @@
 {
   "name": "幸福教養｜模組1 大人先穩",
   "short_name": "幸福教養M1",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#fff3e6",
   "theme_color": "#d86b4a",
-  "description": "不打不罵不氣｜年齡×情境分流｜60秒急救｜錦囊妙計｜每日自評｜微練功",
+  "description": "不打不罵不氣｜年齡×蛋糕分流｜家長先穩定，孩子才安心",
   "icons": [
-    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }

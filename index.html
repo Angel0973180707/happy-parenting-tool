@@ -1,214 +1,77 @@
-<div class="app">
-  <header>
-    <h1>幸福教養支援包</h1>
-    <p class="sub">不打不罵不氣｜腦神經科學回穩工具</p>
-  </header>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸福教養支援包</title>
+    
+    <link rel="manifest" href="manifest.json">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-  <nav class="tabs" role="tablist">
-    <button class="tab active" data-tab="rescue">🟡 現場急救</button>
-    <button class="tab" data-tab="tips">🎁 錦囊妙計</button>
-    <button class="tab" data-tab="check">🟢 30秒自評</button>
-    <button class="tab" data-tab="repair">🔵 事後修復</button>
-    <button class="tab" data-tab="settings">⭐ 我的設定</button>
-  </nav>
+    <header>
+        <h1>幸福教養支援包</h1>
+        <p>不打不罵不生氣 | 腦神經科學回穩工具</p>
+    </header>
 
-  <section class="panel active" id="rescue">
-    <div class="card hero">
-      <div class="big">先穩住，再說</div>
-      <p class="muted">按一下，跟著做 30 秒。先讓自己回線。</p>
+    <main>
+        
+        <section id="rescue-tool" class="tab-content active">
+            <h2>先穩住，再說</h2>
+            
+            <div class="tool-card">
+                <h3>30 秒回穩練習</h3>
+                <p>按一下，跟著做 30 秒。先讓自己回線。</p>
+                <div id="rescue-status" class="status-message">準備好了就按「急救」</div>
+                <button id="rescue-button" class="btn btn-primary">急救</button>
+            </div>
 
-      <button class="primary pulse" id="btnRescue">我快撐不住了（急救）</button>
-      <button class="ghost" id="btnStop">停止</button>
+            <div class="tool-card">
+                <h3>可照念一句話</h3>
+                <p class="phrase-box">「我現在需要先穩一下，等一下我們再說。」</p>
+                <p class="tip">提醒：我是教養者，不是對手。</p>
+            </div>
 
-      <div class="breath" aria-live="polite">
-        <div class="ring" id="ring"></div>
-        <div class="cue" id="cue">準備好了就按「急救」</div>
-      </div>
+            <div class="tool-card">
+                <h3>孩子年齡 (自動換句庫)</h3>
+                <select id="age-select">
+                    <option value="default">請選擇孩子年齡</option>
+                    <option value="2-5">2-5 歲 (幼兒)</option>
+                    <option value="6-12">6-12 歲 (小學)</option>
+                    <option value="13-18">13-18 歲 (青少年)</option>
+                </select>
+                <p id="phrase-display" class="phrase-box"></p>
+            </div>
+            
+        </section>
 
-      <div class="script" id="scriptBox">
-        <h3>可照念一句話</h3>
-        <div class="quote" id="defaultLine">「我現在需要先穩一下，等一下我們再說。」</div>
-        <div class="mini">提醒：我是教養者，不是對手。</div>
-      </div>
-    </div>
+        <section id="challenge-list" class="tab-content">
+            <h2>成長挑戰清單</h2>
+            <div class="tool-card">
+                <p>這是您用來記錄和追蹤孩子成長挑戰的頁面。</p>
+                <p>由於這個版本專注於核心急救功能，此處僅為排版預留，未來可增加待辦清單或筆記功能。</p>
+            </div>
+        </section>
+        
+    </main>
+    
+    <nav class="tab-navigation">
+        <button class="tab-button active" data-tab="rescue-tool">
+            <span class="icon">🏠</span> 
+            急救工具
+        </button>
+        <button class="tab-button" data-tab="challenge-list">
+            <span class="icon">✨</span>
+            成長清單
+        </button>
+        <button class="tab-button" data-tab="my-setting">
+            <span class="icon">⚙️</span>
+            我的設定
+        </button>
+    </nav>
 
-    <div class="card">
-      <h3>孩子年齡（自動換句庫）</h3>
-      <p class="muted">不同年齡，能聽懂的句子不同。先選年齡，工具就會自動換語氣。</p>
-      <div class="grid" id="age-selector">
-        <button class="chip age" data-age="toddler">幼兒 (3-6)</button>
-        <button class="chip age active-age" data-age="school">小學 (7-12)</button>
-        <button class="chip age" data-age="teen">青少年 (13+)</button>
-      </div>
-      <div class="mini muted" id="ageHint"></div>
-    </div>
-
-    <div class="card">
-      <h3>安全延後（溫柔＋清楚）</h3>
-      <div class="grid" id="delay-lines">
-        <button class="chip delay1" data-line="">一鍵延後</button>
-        <button class="chip delay2" data-line="">不想用生氣</button>
-        <button class="chip delay3" data-line="">關係不斷線</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>孩子安全等待位（給落點）</h3>
-      <p class="muted">你在調整時，孩子要「被安放」：給一句話＋一個落點。</p>
-      <ul class="list">
-        <li>一句話：<strong>「不是不要你，我會回來。」</strong></li>
-        <li>一個落點：**（根據年齡可調整）** 抱枕區 / 房間喝水 / 畫畫 3 分鐘</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="panel" id="tips">
-    <div class="card">
-      <h3>錦囊妙計（點一下就能用）</h3>
-      <p class="muted">每類只保留 1–2 句，才叫「救場」。點擊後，句子會自動填入「現場急救」區。</p>
-
-      <div class="tips">
-        <details open>
-          <summary>🔥 我快爆了</summary>
-          <button class="tip t-hot-1" data-line="">照念①</button>
-          <button class="tip t-hot-2" data-line="">照念②</button>
-        </details>
-
-        <details>
-          <summary>😢 孩子哭不停 / 情緒失控</summary>
-          <button class="tip t-cry-1" data-line="">照念①</button>
-          <button class="tip t-cry-2" data-line="">照念②</button>
-        </details>
-
-        <details>
-          <summary>😤 頂嘴 / 不合作 / 拒絕指令</summary>
-          <button class="tip t-rude-1" data-line="">照念①</button>
-          <button class="tip t-rude-2" data-line="">照念②</button>
-        </details>
-
-        <details>
-          <summary>🧍 公共場合失控 / 丟臉焦慮</summary>
-          <button class="tip t-public-1" data-line="">照念①</button>
-          <button class="tip t-public-2" data-line="">照念②</button>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <section class="panel" id="check">
-    <div class="card">
-      <h3>30 秒自我狀態檢測</h3>
-      <p class="muted">不是評分，是讓你知道「今天的系統狀態」。</p>
-
-      <form id="quiz">
-        <div class="q">
-          <label>1) 今天我身體的能量：</label>
-          <select required name="q1">
-            <option value="">請選</option>
-            <option value="2">還可以</option>
-            <option value="1">有點累</option>
-            <option value="0">很累</option>
-          </select>
-        </div>
-
-        <div class="q">
-          <label>2) 面對孩子狀況時，我比較像：</label>
-          <select required name="q2">
-            <option value="">請選</option>
-            <option value="2">能停一下再說</option>
-            <option value="1">會忍住但很悶</option>
-            <option value="0">容易馬上反應</option>
-          </select>
-        </div>
-
-        <div class="q">
-          <label>3) 最近我比較常：</label>
-          <select required name="q3">
-            <option value="">請選</option>
-            <option value="2">能回來修復</option>
-            <option value="1">事後懊悔但不知怎麼做</option>
-            <option value="0">卡住、不想面對</option>
-          </select>
-        </div>
-
-        <div class="q">
-          <label>4) 我最需要的是：</label>
-          <select required name="q4">
-            <option value="">請選</option>
-            <option value="2">維持界線又不傷關係</option>
-            <option value="1">多一點耐心</option>
-            <option value="0">立刻止血的急救</option>
-          </select>
-        </div>
-
-        <div class="q">
-          <label>5) 今天我想練的 1 句話：</label>
-          <select required name="q5">
-            <option value="">請選</option>
-            <option value="2">先穩住，再說</option>
-            <option value="1">我是教養者，不是對手</option>
-            <option value="0">不是不要你，我會回來</option>
-          </select>
-        </div>
-
-        <button class="primary" type="submit">看我的狀態</button>
-      </form>
-
-      <div class="result" id="result" hidden></div>
-    </div>
-  </section>
-
-  <section class="panel" id="repair">
-    <div class="card">
-      <h3>事後修復 3 問</h3>
-      <p class="muted">不檢討孩子、不貶低自己，只做「系統升級」。</p>
-
-      <div class="q">
-        <label>1) 剛剛我最難的是什麼？</label>
-        <textarea id="r1" rows="2" placeholder="例：我太累了，一聽到哭就爆"></textarea>
-      </div>
-
-      <div class="q">
-        <label>2) 我有哪一刻「穩住了」？</label>
-        <textarea id="r2" rows="2" placeholder="例：我有停 10 秒，沒有再追罵"></textarea>
-      </div>
-
-      <div class="q">
-        <label>3) 下次我想多做一點的是？</label>
-        <textarea id="r3" rows="2" placeholder="例：先說延後語句，再帶去等待位"></textarea>
-      </div>
-
-      <div class="grid">
-        <button class="primary" id="saveRepair">保存（存在本機）</button>
-        <button class="ghost" id="loadRepair">載入上次</button>
-      </div>
-
-      <div class="card soft">
-        <h3>修復語句庫（可照念）</h3>
-        <button class="tip rep1" data-line="">修復①</button>
-        <button class="tip rep2" data-line="">修復②</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="panel" id="settings">
-    <div class="card">
-      <h3>我的急救設定</h3>
-      <p class="muted">把你最常用的一句話，設成「急救預設」。</p>
-
-      <label class="block">預設救場句：</label>
-      <input id="favLine" class="input" placeholder="例：先穩住，再說（或你自己的）" />
-
-      <div class="grid">
-        <button class="primary" id="saveFav">儲存</button>
-        <button class="ghost" id="resetFav">恢復預設</button>
-      </div>
-
-      <div class="mini muted">提示：這會保存在你自己的手機/電腦，不會上傳。</div>
-    </div>
-  </section>
-
-  <footer class="foot">
-    <span>© 幸福教養｜模組1工具（個人自用版）</span>
-  </footer>
-</div>
+    <script src="script.js"></script>
+</body>
+</html>

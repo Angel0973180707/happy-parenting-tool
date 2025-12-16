@@ -386,3 +386,11 @@ h1{margin:6px 0 4px; font-size:22px}
   opacity:1;
   transform:translateX(-50%) translateY(-6px);
              }
+.install-hint {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(216, 107, 74, 0.08);
+  font-size: 14px;
+  line-height: 1.5;
+}

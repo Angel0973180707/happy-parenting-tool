@@ -22,11 +22,11 @@
         <h1>模組 1｜大人先穩</h1>
         <p class="sub">不用威嚇｜以愛連結｜先穩住，再說</p>
 
-        <!-- ✅ 安裝提示（三星 / iPhone） -->
-        <div class="install-hint" role="note" aria-label="安裝提示">
-          📱 建議安裝到桌面使用：<br />
-          安卓手機 → Chrome／三星網路 →「加入主畫面」<br />
-          iPhone → Safari →「分享」→「加入主畫面」
+        <!-- ✅ 安裝提示（安卓/蘋果） -->
+        <div class="install-hint" id="installHint">
+          📱 建議安裝使用：<br />
+          安卓手機 → Chrome／三星網路「加入主畫面」<br />
+          iPhone → Safari「分享」→「加入主畫面」
         </div>
       </div>
 
@@ -44,32 +44,32 @@
           <div class="ctxBar">
             <label class="ctxLabel">現在情境：</label>
             <div class="ctxRow" role="group" aria-label="情境切換">
-              <button class="ctx active" data-ctx="home">🏠 家裡</button>
-              <button class="ctx" data-ctx="out">🚶 外出</button>
-              <button class="ctx" data-ctx="night">🌙 睡前</button>
+              <button class="ctx active" data-ctx="home" type="button">🏠 家裡</button>
+              <button class="ctx" data-ctx="out" type="button">🚶 外出</button>
+              <button class="ctx" data-ctx="night" type="button">🌙 睡前</button>
             </div>
           </div>
         </div>
 
         <div class="quick">
-          <!-- ✅ 安裝提示鈕（PWA） -->
-          <button class="btn primary installBtn" id="btnInstall" hidden>安裝到桌面</button>
+          <!-- ✅ 安裝提示鈕（PWA：Chrome/部分瀏覽器可用） -->
+          <button class="btn primary installBtn" id="btnInstall" hidden type="button">安裝到桌面</button>
 
-          <button class="btn primary" id="btnOpenRescue">我快撐不住了（急救）</button>
-          <button class="btn ghost" id="btnStop">停止</button>
+          <button class="btn primary" id="btnOpenRescue" type="button">我快撐不住了（急救）</button>
+          <button class="btn ghost" id="btnStop" type="button">停止</button>
         </div>
       </div>
     </header>
 
     <nav class="tabs" role="tablist" aria-label="Module 1 Tabs">
-      <button class="tab active" data-tab="t0" role="tab" aria-selected="true">整合流程</button>
-      <button class="tab" data-tab="t1" role="tab" aria-selected="false">穩定語錨點</button>
-      <button class="tab" data-tab="t2" role="tab" aria-selected="false">角色回位</button>
-      <button class="tab" data-tab="t3" role="tab" aria-selected="false">安全延後</button>
-      <button class="tab" data-tab="t4" role="tab" aria-selected="false">等待位</button>
-      <button class="tab" data-tab="t5" role="tab" aria-selected="false">錦囊妙計（急救）</button>
-      <button class="tab" data-tab="t6" role="tab" aria-selected="false">微練功</button>
-      <button class="tab" data-tab="t7" role="tab" aria-selected="false">每日自評</button>
+      <button class="tab active" data-tab="t0" role="tab" aria-selected="true" type="button">整合流程</button>
+      <button class="tab" data-tab="t1" role="tab" aria-selected="false" type="button">穩定語錨點</button>
+      <button class="tab" data-tab="t2" role="tab" aria-selected="false" type="button">角色回位</button>
+      <button class="tab" data-tab="t3" role="tab" aria-selected="false" type="button">安全延後</button>
+      <button class="tab" data-tab="t4" role="tab" aria-selected="false" type="button">等待位</button>
+      <button class="tab" data-tab="t5" role="tab" aria-selected="false" type="button">錦囊妙計（急救）</button>
+      <button class="tab" data-tab="t6" role="tab" aria-selected="false" type="button">微練功</button>
+      <button class="tab" data-tab="t7" role="tab" aria-selected="false" type="button">每日自評</button>
     </nav>
 
     <!-- 急救浮層 -->
@@ -80,14 +80,14 @@
             <div class="overlayTitle">60 秒急救｜跟著做</div>
             <div class="muted small" id="rescueMeta">年齡：小學｜情境：家裡</div>
           </div>
-          <button class="x" id="btnClose" aria-label="關閉">✕</button>
+          <button class="x" id="btnClose" aria-label="關閉" type="button">✕</button>
         </div>
 
         <div class="countdown">
           <div class="countNum" id="countNum">60</div>
           <div class="bar"><span id="countBar"></span></div>
         </div>
-        <div class="muted mini" id="countHint">現在只要撐完這 1 分鐘。先不要講道理。</div>
+        <div class="muted mini" id="countHint">現在只要撐完這 1 分鐘。先讓情緒不再往上走。</div>
 
         <div class="breath">
           <div class="ring" id="ring"></div>
@@ -95,19 +95,19 @@
         </div>
 
         <div class="lineBox">
-          <div class="label">可照念一句話（會依年齡 × 情境建議，可自訂）</div>
+          <div class="label">可照念一句話（依年齡 × 情境建議，可自訂）</div>
           <div class="quote" id="defaultLine">「我現在需要先穩一下，等一下我們再說。」</div>
-          <div class="mini" id="tipHint">提醒：同理＋界線＋承諾</div>
+          <div class="mini" id="tipHint">提醒：看見＋界線＋承諾（關係不斷線）</div>
 
           <div class="overlayBtns">
-            <button class="btn primary" id="btnStartRescue">開始急救</button>
-            <button class="btn ghost" id="btnCopyDefault">複製這句</button>
+            <button class="btn primary" id="btnStartRescue" type="button">開始急救</button>
+            <button class="btn ghost" id="btnCopyDefault" type="button">複製這句</button>
           </div>
         </div>
 
         <div class="overlayBtns bottom">
-          <button class="btn ghost" id="btnStopRescue">停止急救</button>
-          <button class="btn ghost" id="btnClose2">關閉</button>
+          <button class="btn ghost" id="btnStopRescue" type="button">停止急救</button>
+          <button class="btn ghost" id="btnClose2" type="button">關閉</button>
         </div>
       </div>
     </section>
@@ -117,20 +117,20 @@
       <section class="panel active" id="t0" role="tabpanel">
         <div class="card">
           <h2>整合流程（現場照走）</h2>
-          <p class="muted">你只要做對順序，就會穩。不是完美，是可重複。</p>
+          <p class="muted">你只要做對順序，局面就會慢慢回穩。不是完美，是可重複。</p>
 
           <ol class="flow">
-            <li><span class="dot">1</span> 刺激出現（孩子哭/吵/頂嘴/失控）</li>
+            <li><span class="dot">1</span> 刺激出現（哭/吵/頂嘴/失控）</li>
             <li><span class="dot">2</span> <strong>先穩住，再說</strong>（呼吸 4/6 × 2）</li>
-            <li><span class="dot">3</span> <strong>我是教養者，不是對手</strong>（角色回位）</li>
+            <li><span class="dot">3</span> <strong>回到教養者的位置</strong>（我不是對手）</li>
             <li><span class="dot">4</span> <strong>安全延後語句</strong>（不在高張力談）</li>
             <li><span class="dot">5</span> <strong>孩子安全等待位</strong>（給落點、關係不斷線）</li>
             <li><span class="dot">6</span> 回來處理（界線/合作/修復）</li>
           </ol>
 
           <div class="ctaRow">
-            <button class="btn primary" data-jump="t5">先準備「錦囊妙計（急救）」</button>
-            <button class="btn ghost" data-jump="t1">從穩定語錨點開始</button>
+            <button class="btn primary" data-jump="t5" type="button">先準備「錦囊妙計（急救）」</button>
+            <button class="btn ghost" data-jump="t1" type="button">從穩定語錨點開始</button>
           </div>
         </div>
 
@@ -139,8 +139,8 @@
           <p class="muted">會顯示在急救浮層，也會被「錦囊急救」套用。</p>
           <div class="setting">
             <input id="favLine" class="input" placeholder="例：我先穩一下，等一下再談" />
-            <button class="btn primary" id="saveFav">儲存</button>
-            <button class="btn ghost" id="resetFav">恢復建議</button>
+            <button class="btn primary" id="saveFav" type="button">儲存</button>
+            <button class="btn ghost" id="resetFav" type="button">恢復建議</button>
           </div>
           <div class="mini muted">若你不自訂，會依「年齡 × 情境」自動套用建議句。</div>
         </div>
@@ -168,16 +168,16 @@
               <ul>
                 <li>先不講道理</li>
                 <li>先不質問</li>
-                <li>先不定罪</li>
+                <li>先不貼標籤</li>
               </ul>
             </div>
           </div>
 
           <div class="quoteSet">
             <div class="label">一鍵句（點一下＝複製＋套入急救句）</div>
-            <button class="chip" data-say="先穩住，再說。">先穩住，再說。</button>
-            <button class="chip" data-say="我先呼吸兩次，再處理。">我先呼吸兩次，再處理。</button>
-            <button class="chip" data-say="我可以穩住，我等一下再說。">我可以穩住，我等一下再說。</button>
+            <button class="chip" data-say="我先穩住，等一下再說。" type="button">我先穩住，等一下再說。</button>
+            <button class="chip" data-say="我先呼吸兩次，讓情緒不再往上走。" type="button">我先呼吸兩次，讓情緒不再往上走。</button>
+            <button class="chip" data-say="我可以回穩，我們等一下再談。" type="button">我可以回穩，我們等一下再談。</button>
           </div>
         </div>
       </section>
@@ -186,16 +186,16 @@
       <section class="panel" id="t2" role="tabpanel">
         <div class="card">
           <h2>工具 1-2｜角色回位卡</h2>
-          <p class="muted">你的角色不是「贏」，而是「帶孩子回安全」。</p>
+          <p class="muted">你的角色不是對抗，而是帶孩子回安全、回穩。</p>
 
-          <div class="big">我是教養者，不是對手</div>
+          <div class="big">我是教養者，我在帶路</div>
 
           <div class="grid">
             <div class="miniCard">
               <div class="miniTitle">自問 2 秒</div>
               <ul>
-                <li>我現在是想「教」？還是想「贏」？</li>
-                <li>我是在保護關係？還是在輸出情緒？</li>
+                <li>我現在要做的是「帶回安全」嗎？</li>
+                <li>我是在修復關係？還是在輸出壓力？</li>
               </ul>
             </div>
             <div class="miniCard">
@@ -209,9 +209,9 @@
 
           <div class="quoteSet">
             <div class="label">一鍵句（點一下＝複製＋套入急救句）</div>
-            <button class="chip" data-say="我先回到大人的位置。">我先回到大人的位置。</button>
-            <button class="chip" data-say="我不跟你吵，我會帶你回安全。">我不跟你吵，我會帶你回安全。</button>
-            <button class="chip" data-say="我是教養者，不是對手。">我是教養者，不是對手。</button>
+            <button class="chip" data-say="我先回到大人的位置，讓我們慢慢回穩。" type="button">我先回到大人的位置，讓我們慢慢回穩。</button>
+            <button class="chip" data-say="我不急著處理對錯，我先帶你回安全。" type="button">我不急著處理對錯，我先帶你回安全。</button>
+            <button class="chip" data-say="我在這裡，我們先讓情緒不再升高。" type="button">我在這裡，我們先讓情緒不再升高。</button>
           </div>
         </div>
       </section>
@@ -226,13 +226,13 @@
 
           <div class="quoteSet">
             <div class="label">一鍵延後（點一下＝複製＋套入急救句）</div>
-            <button class="chip" data-say="我知道你很難受，現在我們先不談，等我穩好再一起處理。">
-              我知道你很難受…等我穩好再一起處理
+            <button class="chip" data-say="我看見你很難受。現在我們先停一下，等我穩好再一起處理。" type="button">
+              我看見你很難受…等我穩好再一起處理
             </button>
-            <button class="chip" data-say="這件事很重要，我不想用生氣處理，我們等一下再說。">
-              這件事很重要…我不想用生氣處理
+            <button class="chip" data-say="這件事很重要，我不想在高張力處理。我們等一下再說。" type="button">
+              這件事很重要…我不想在高張力處理
             </button>
-            <button class="chip" data-say="我在，我沒有不要你。我先穩一下，等一下回來。">
+            <button class="chip" data-say="我在，我沒有不要你。我先穩一下，等一下回來。" type="button">
               我在…我沒有不要你…等一下回來
             </button>
           </div>
@@ -278,9 +278,9 @@
 
           <div class="quoteSet">
             <div class="label">一鍵句（點一下＝複製＋套入急救句）</div>
-            <button class="chip" data-say="你先在安全的地方等一下，抱抱娃娃，我很快回來。">你先等一下…我很快回來</button>
-            <button class="chip" data-say="不是不要你，我會回來。你先坐這裡，等我們都穩一點。">不是不要你…等我們都穩一點</button>
-            <button class="chip" data-say="我先去穩一下，我會回來。你可以喝水、或坐著抱抱枕。">我先去穩一下…你可以喝水</button>
+            <button class="chip" data-say="你先在安全的地方等一下，抱抱娃娃，我很快回來。" type="button">你先等一下…我很快回來</button>
+            <button class="chip" data-say="不是不要你，我會回來。你先坐這裡，等我們都穩一點。" type="button">不是不要你…等我們都穩一點</button>
+            <button class="chip" data-say="我先去穩一下，我會回來。你可以喝水、或坐著抱抱枕。" type="button">我先去穩一下…你可以喝水</button>
           </div>
         </div>
       </section>
@@ -292,11 +292,11 @@
           <p class="muted">點一個錦囊：①複製 ②套用急救句 ③直接進 60 秒急救。</p>
 
           <div class="pillRow">
-            <button class="pill active" data-cat="all">全部</button>
-            <button class="pill" data-cat="panic">我快爆了</button>
-            <button class="pill" data-cat="cry">孩子哭</button>
-            <button class="pill" data-cat="fight">頂嘴/不合作</button>
-            <button class="pill" data-cat="public">公共/規範</button>
+            <button class="pill active" data-cat="all" type="button">全部</button>
+            <button class="pill" data-cat="panic" type="button">我快爆了</button>
+            <button class="pill" data-cat="cry" type="button">孩子哭</button>
+            <button class="pill" data-cat="fight" type="button">頂嘴/不合作</button>
+            <button class="pill" data-cat="public" type="button">公共/規範</button>
           </div>
 
           <div id="tipsWrap"></div>
@@ -314,9 +314,9 @@
             <div class="practiceLine" id="practiceLine">載入中…</div>
 
             <div class="ctaRow">
-              <button class="btn primary" id="btnNewPractice">換一句</button>
-              <button class="btn ghost" id="btnCopyPractice">複製</button>
-              <button class="btn primary" id="btnDonePractice">我完成了 ✅</button>
+              <button class="btn primary" id="btnNewPractice" type="button">換一句</button>
+              <button class="btn ghost" id="btnCopyPractice" type="button">複製</button>
+              <button class="btn primary" id="btnDonePractice" type="button">我完成了 ✅</button>
             </div>
 
             <div class="mini muted" id="practiceStatus">今日尚未打卡</div>
@@ -343,12 +343,12 @@
             </div>
             <div class="q"><label>3) 孩子一失控，我內心常出現：</label>
               <select name="q3" required>
-                <option value="">請選</option><option value="2">我知道怎麼帶回來</option><option value="1">我不想爆但很難</option><option value="0">我需要立刻止血</option>
+                <option value="">請選</option><option value="2">我知道怎麼帶回安全</option><option value="1">我想穩住但很難</option><option value="0">我需要先止血回穩</option>
               </select>
             </div>
             <div class="q"><label>4) 今天我最需要的是：</label>
               <select name="q4" required>
-                <option value="">請選</option><option value="2">維持連結</option><option value="1">清楚界線</option><option value="0">先救我自己</option>
+                <option value="">請選</option><option value="2">維持連結</option><option value="1">清楚界線</option><option value="0">先回穩自己</option>
               </select>
             </div>
             <div class="q"><label>5) 我願意做一個最小動作：</label>
@@ -368,8 +368,8 @@
             <div class="resultTitle">今日建議</div>
             <div class="resultText" id="quizText"></div>
             <div class="ctaRow">
-              <button class="btn primary" id="btnGoRescue">直接急救</button>
-              <button class="btn ghost" id="btnGoTips">去錦囊妙計</button>
+              <button class="btn primary" id="btnGoRescue" type="button">直接急救</button>
+              <button class="btn ghost" id="btnGoTips" type="button">去錦囊妙計</button>
             </div>
           </div>
 
@@ -395,4 +395,4 @@
     }
   </script>
 </body>
-  </html>
+              </html>

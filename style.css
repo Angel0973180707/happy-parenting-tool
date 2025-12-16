@@ -1,271 +1,159 @@
-:root{
-
---bg:#f9f9f9; /* 淺米白 */
-
---card:#ffffff;
-
---ink:#2c3e50; /* 深藍灰 */
-
---muted:#7f8c8d; /* 柔和灰 */
-
---pri:#2ecc71; /* 松綠 (主色) */
-
---pri-light:#e8f8f5; /* 淺綠 (柔和背景) */
-
---pri-dark:#27ae60;
-
---line:#ecf0f1; /* 邊框線 */
-
---shadow: 0 8px 20px rgba(0,0,0,.08);
-
---radius:16px;
-
---rescue:#e74c3c; /* 急救紅 */
-
---rescue-light:#fdeaea;
-
+/* ---------------------------------
+   Reset & Base Styles
+------------------------------------ */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7; /* 淺暖色背景 */
+    color: #333;
+    padding-bottom: 70px; /* 確保內容不會被底部的 Tab 導航列遮擋 */
 }
 
-*{box-sizing:border-box}
-
-body{
-
-margin:0;
-
-font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif;
-
-background:var(--bg);
-
-color:var(--ink);
-
-line-height: 1.6;
-
+header {
+    background-color: #fce4ec; /* 柔和粉紅色標題背景 */
+    color: #4a148c; /* 深紫色文字 */
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.app{max-width:860px; margin:0 auto; padding:18px}
-
-header{padding:8px 4px 14px}
-
-h1{margin:6px 0 4px; font-size:24px; color:var(--pri-dark)}
-
-.sub{margin:0; color:var(--muted); font-size:14px}
-
-/* Tabs 優化與錯誤修正 */
-
-.tabs{
-
-display:flex; gap:8px; flex-wrap:wrap;
-
-position:sticky; top:0;
-
-/* 已移除重複的 padding 宣告 */
-
-background:rgba(249,249,249,0.95);
-
-backdrop-filter: blur(8px);
-
-z-index: 10;
-
-margin: -10px -18px 0; /* 讓 sticky tab 稍微突出 */
-
-padding: 12px 18px 10px; /* 修正後只保留這一個 padding */
-
-box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-
+h1 {
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+h2 {
+    font-size: 20px;
+    color: #880e4f; /* 深粉色標題 */
+    margin-top: 20px;
+    border-bottom: 2px solid #ffcdd2;
+    padding-bottom: 5px;
+}
+h3 {
+    font-size: 18px;
+    color: #311b92; /* 深藍紫色標題 */
+    margin-top: 10px;
 }
 
-.tab{
+/* ---------------------------------
+   Tab Navigation and Content Styling
+------------------------------------ */
 
-border:1px solid var(--line);
-
-background:#fff; color:var(--ink);
-
-padding:10px 14px; border-radius:999px;
-
-cursor:pointer; font-size:14px;
-
-transition: all 0.2s;
-
+main {
+    padding: 0 15px;
 }
 
-.tab.active{background:var(--pri-light); border-color:var(--pri); color:var(--pri)}
-
-.tab:hover{background:var(--pri-light)}
-
-.panel{display:none; padding:6px 0 24px}
-
-.panel.active{display:block}
-
-/* Card 優化 */
-
-.card{
-
-background:var(--card);
-
-border:1px solid var(--line);
-
-border-radius:var(--radius);
-
-padding:20px;
-
-box-shadow:var(--shadow);
-
-margin:16px 0;
-
-transition: all 0.3s;
-
+/* 隱藏所有非活躍的內容區塊，實現分頁效果 */
+.tab-content {
+    display: none;
+    padding-top: 10px;
 }
 
-.card.hero{padding:24px; border-left: 5px solid var(--rescue); background:var(--rescue-light)}
-
-.card.soft{background:var(--pri-light); border: 1px dashed var(--pri)}
-
-.big{font-size:32px; font-weight:800; letter-spacing:.5px; color:var(--rescue)}
-
-h3{color:var(--ink); margin-top:0}
-
-.muted{color:var(--muted); font-size:14px}
-
-.mini{font-size:12px; color:var(--muted); margin-top:10px}
-
-/* 按鈕與 Chip/Tip 優化 */
-
-.grid{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
-
-.primary{
-
-background:var(--rescue);
-
-color:#fff; border:0; padding:14px 20px;
-
-border-radius:12px; cursor:pointer; font-weight:700;
-
-transition: background 0.3s;
-
+/* 只顯示當前活躍的內容區塊 */
+.tab-content.active {
+    display: block;
 }
 
-.primary:hover{background:#c0392b}
-
-.ghost{
-
-background:#fff; border:1px solid var(--line);
-
-padding:14px 20px; border-radius:12px; cursor:pointer;
-
-transition: all 0.3s;
-
+/* 底部導航列樣式 */
+.tab-navigation {
+    display: flex;
+    justify-content: space-around;
+    position: fixed; /* 讓選單固定在底部 */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 }
 
-.ghost:hover{background:var(--line)}
-
-.chip,.tip{
-
-background:#fff; border:1px solid var(--line);
-
-padding:10px 15px; border-radius:12px; cursor:pointer;
-
-transition: all 0.2s;
-
+.tab-button {
+    flex-grow: 1;
+    border: none;
+    padding: 10px 0;
+    background: none;
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
 }
 
-.chip:hover, .tip:hover{background:var(--pri-light); border-color:var(--pri)}
-
-.chip.active-age{background:var(--pri); color:white; border-color:var(--pri-dark)}
-
-/* 急救按鈕脈衝動畫 */
-
-.primary.pulse {
-
-animation: pulse 2s infinite;
-
+.tab-button .icon {
+    font-size: 20px;
+    margin-bottom: 2px;
 }
 
-@keyframes pulse {
-
-0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
-
-70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
-
-100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
-
+.tab-button.active {
+    color: #ff4081; /* 活躍狀態使用暖粉色 */
 }
 
-/* 呼吸動畫優化 */
-
-.breath{margin-top:20px; display:flex; gap:16px; align-items:center}
-
-.ring{
-
-width:80px; height:80px; border-radius:50%;
-
-border:3px solid var(--pri);
-
-background:radial-gradient(circle at 30% 30%, #ffffff, #f0fff0);
-
-transition: transform 600ms ease, opacity 600ms ease;
-
+/* ---------------------------------
+   Card & Button Styles
+------------------------------------ */
+.tool-card {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.cue{font-size:15px; font-weight: 500; color:var(--ink)}
-
-/* 語句框優化 */
-
-.script .quote{
-
-margin-top:10px; padding:15px;
-
-border:2px dashed var(--rescue); border-radius:12px;
-
-background:#ffeded; font-weight:700; font-size:1.1em;
-
-color:var(--ink);
-
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
 }
 
-/* 表單優化 */
-
-.q{margin:15px 0}
-
-select, textarea{
-
-width:100%; padding:12px 12px;
-
-border:1px solid var(--line); border-radius:12px;
-
-font-size:15px; background:#fff;
-
-color:var(--ink);
-
+.btn-primary {
+    background-color: #ff4081; /* 急救按鈕使用暖粉色 */
+    color: white;
 }
 
-.input{
-
-width:100%; padding:12px 12px;
-
-border-radius:12px; border:1px solid var(--line);
-
-font-size:15px;
-
+.btn-primary:active {
+    background-color: #e91e63;
 }
 
-.result{
-
-margin-top:16px; padding:18px;
-
-border-radius:12px; background:var(--pri-light);
-
-border:1px solid var(--pri);
-
-font-weight: 500;
-
+.btn.running {
+    background-color: #fbc02d; /* 運行時顯示黃色 */
 }
 
-/* 底部與 Details */
+.status-message {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 16px;
+    color: #d81b60; /* 狀態文字顏色 */
+    font-weight: 500;
+}
 
-.foot{color:var(--muted); font-size:12px; padding:10px 4px 0}
+.phrase-box {
+    background-color: #fff9c4; /* 提醒語句背景 */
+    padding: 10px;
+    border-left: 5px solid #ffcc00;
+    margin-top: 10px;
+    font-style: italic;
+}
 
-details{border:1px solid var(--line); border-radius:12px; padding:10px 12px; background:#fff; margin:10px 0}
+.tip {
+    font-size: 12px;
+    color: #777;
+    text-align: right;
+    margin-top: 5px;
+}
 
-summary{cursor:pointer; font-weight:700; padding:4px 0}
-
-details[open] > summary { color: var(--pri); }
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    font-size: 16px;
+}

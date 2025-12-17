@@ -2,7 +2,22 @@
 // PWA Install Button (Prompt)
 // =========================
 const btnInstall = document.getElementById("btnInstall");
+const btnShowInstallGuide = document.getElementById("btnShowInstallGuide");
 let deferredPrompt = null;
+
+function showInstallGuide(){
+  alert(
+`📱 安裝到主畫面（更像 App）
+
+✅ Android／三星（Chrome 或 三星網路）
+右上角「⋮」→「加入主畫面」
+
+✅ iPhone（Safari）
+分享按鈕 →「加入主畫面」
+
+小提醒：若已安裝，安裝按鈕可能不會出現。`
+  );
+}
 
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
@@ -13,50 +28,26 @@ window.addEventListener("beforeinstallprompt", (e) => {
 if (btnInstall) {
   btnInstall.addEventListener("click", async () => {
     if (!deferredPrompt) {
-      alert("若未出現安裝視窗：\nAndroid：請用 Chrome／三星網路開啟此頁\niPhone：請用 Safari 分享 → 加入主畫面");
+      showInstallGuide();
       return;
     }
     deferredPrompt.prompt();
     const choice = await deferredPrompt.userChoice;
     deferredPrompt = null;
     btnInstall.hidden = true;
-    if (choice.outcome === "accepted") showToast("已送出安裝");
-    else showToast("已取消安裝");
+    if (choice.outcome === "accepted") {
+      showToast("已送出安裝");
+    } else {
+      showToast("已取消安裝");
+    }
   });
 }
+
+btnShowInstallGuide?.addEventListener("click", showInstallGuide);
 
 window.addEventListener("appinstalled", () => {
   if (btnInstall) btnInstall.hidden = true;
   showToast("安裝完成 ✅");
-});
-
-// =========================
-// Install Hint Modal (方案 B)
-// =========================
-const installOverlay = document.getElementById("installOverlay");
-const btnInstallHint = document.getElementById("btnInstallHint");
-const btnInstallClose = document.getElementById("btnInstallClose");
-const btnInstallClose2 = document.getElementById("btnInstallClose2");
-const btnInstallCopyLink = document.getElementById("btnInstallCopyLink");
-
-function openInstallOverlay(){
-  if(!installOverlay) return;
-  installOverlay.classList.add("show");
-  installOverlay.setAttribute("aria-hidden","false");
-}
-function closeInstallOverlay(){
-  if(!installOverlay) return;
-  installOverlay.classList.remove("show");
-  installOverlay.setAttribute("aria-hidden","true");
-}
-
-btnInstallHint?.addEventListener("click", openInstallOverlay);
-btnInstallClose?.addEventListener("click", closeInstallOverlay);
-btnInstallClose2?.addEventListener("click", closeInstallOverlay);
-installOverlay?.addEventListener("click", (e)=>{ if(e.target === installOverlay) closeInstallOverlay(); });
-
-btnInstallCopyLink?.addEventListener("click", async ()=>{
-  await copyText(location.href);
 });
 
 // ===== Tabs =====
@@ -154,6 +145,7 @@ function stopCountdown(){
   countBar.style.width = "100%";
   countHint.textContent = "現在只要撐完這 1 分鐘。先不要講道理。";
 }
+
 function startCountdown(){
   stopCountdown();
   secondsLeft = 60;
@@ -166,7 +158,7 @@ function startCountdown(){
     countBar.style.width = (secondsLeft/60*100) + "%";
 
     if(secondsLeft === 40) countHint.textContent = "你做得很好。先把聲音放慢、放低。";
-    if(secondsLeft === 20) countHint.textContent = "快到了。只要情緒不繼續升高，你就做對了。";
+    if(secondsLeft === 20) countHint.textContent = "快到了。只要情緒不繼續升高，你就已經做得很好。";
 
     if(secondsLeft <= 0){
       clearInterval(countTimer);
@@ -228,111 +220,10 @@ const ctxBtns = document.querySelectorAll(".ctx");
 let currentCtx = localStorage.getItem(KEY_CTX) || "home";
 const CTX_NAME = { home:"家裡", out:"外出", night:"睡前" };
 
-// ===== FULL LIB (可直接跑) =====
-const LIB = {
-  preschool:{
-    name:"幼兒",
-    hint:"提醒：語速慢、句子短、先抱穩再引導。",
-    base:{
-      home:"我在，我先穩一下，等一下抱抱再說。",
-      out:"我在，我先穩一下，我們到旁邊再說。",
-      night:"我在，我先穩一下，等一下陪你睡。"
-    },
-    practice:[
-      {home:"吸 4 吐 6 × 2：我先穩住，再陪你。", out:"聲音放低：我在，我們先到旁邊。", night:"慢慢吐氣：我在，我會陪你。"},
-      {home:"腳踩地：我現在先穩住。", out:"看一個點：我先穩一下。", night:"肩膀放下：我先穩一下。"},
-      {home:"先不講道理：先抱穩。", out:"先保安全：先牽好。", night:"先安撫：再談規矩。"}
-    ],
-    tips:[
-      {cat:"panic", title:"我快爆了（先穩住）", items:[
-        {home:"我先呼吸兩次，等一下再處理。", out:"我先停一下，我們到旁邊。", night:"我先穩一下，等一下再說。"},
-        {home:"我需要先穩住，才不會用生氣處理。", out:"我需要先穩住，我會回來。", night:"我先穩住，我還在。"}
-      ]},
-      {cat:"cry", title:"孩子哭（先連結）", items:[
-        {home:"我在，你可以哭，我陪你。", out:"我在，我們到旁邊，我陪你。", night:"我在，哭一下沒關係，我陪你。"},
-        {home:"你很難受，我知道，我先抱抱你。", out:"我知道你很難受，我在。", night:"你需要我，我在。"}
-      ]},
-      {cat:"fight", title:"頂嘴/不合作（先降張力）", items:[
-        {home:"我先停一下，等我們都穩一點再說。", out:"先停一下，我們到旁邊再說。", night:"我先穩一下，等一下再談。"},
-        {home:"我不跟你吵，我會帶你回安全。", out:"我不跟你吵，我會帶你回安全。", night:"我不跟你吵，我們先安靜。"}
-      ]},
-      {cat:"public", title:"公共/規範（先安全）", items:[
-        {home:"我們先回到安全的位置，再說。", out:"先牽好手，等一下再講。", night:"先安靜，我們等一下再談。"},
-        {home:"我會陪你，但我需要先穩住。", out:"我在，但我們先站旁邊。", night:"我在，我先穩一下。"}
-      ]}
-    ]
-  },
-
-  elementary:{
-    name:"小學",
-    hint:"提醒：同理＋界線＋承諾。先穩，再談規則。",
-    base:{
-      home:"我現在需要先穩一下，等一下我們再說。",
-      out:"我先穩一下，我們到旁邊再說。",
-      night:"我先穩一下，等一下再談。"
-    },
-    practice:[
-      {home:"吸 4 吐 6 × 2：先穩住，再說。", out:"先降音量：慢慢說、慢慢走。", night:"放下肩膀：我先穩一下。"},
-      {home:"我先回到大人的位置。", out:"我先回到大人的位置。", night:"我可以清楚，也可以溫柔。"},
-      {home:"不在高張力談重要的事。", out:"先安全，後規則。", night:"先連結，再界線。"}
-    ],
-    tips:[
-      {cat:"panic", title:"我快爆了（先救我自己）", items:[
-        {home:"我先呼吸兩次，等一下再處理。", out:"我先停一下，我們到旁邊。", night:"我先穩一下，等一下再說。"},
-        {home:"這件事很重要，我不想用生氣處理。", out:"我需要先穩住，我會回來。", night:"我在，我會回來。"}
-      ]},
-      {cat:"cry", title:"孩子哭（連結不中斷）", items:[
-        {home:"我在，你很難受我知道，等一下我們一起處理。", out:"我在，我們到旁邊，我陪你。", night:"我在，你可以哭一下，我陪你。"},
-        {home:"你先在這裡抱抱枕，我很快回來。", out:"你先站我旁邊，我很快回來。", night:"你先喝水，我很快回來。"}
-      ]},
-      {cat:"fight", title:"頂嘴/不合作（先降張力）", items:[
-        {home:"我先停一下，等我們都穩一點再談。", out:"先到旁邊，再談。", night:"先穩一下，等一下再談。"},
-        {home:"我不跟你吵，我會帶你回安全。", out:"我不跟你吵，我會帶你回安全。", night:"我不跟你吵，我們先安靜。"}
-      ]},
-      {cat:"public", title:"公共/規範（先安全）", items:[
-        {home:"我們先回到安全的位置，再說。", out:"先遵守安全，等一下再講原因。", night:"先安靜，我們等一下再談。"},
-        {home:"我會陪你，但我需要先穩住。", out:"我在，但我們先站旁邊。", night:"我在，我先穩一下。"}
-      ]}
-    ]
-  },
-
-  teen:{
-    name:"青春期",
-    hint:"提醒：尊重界線、避免對抗、留出口。先穩再談。",
-    base:{
-      home:"我先穩一下，等一下我們再談。",
-      out:"我先穩一下，我們換個地方談。",
-      night:"我先穩一下，明天再談也可以。"
-    },
-    practice:[
-      {home:"慢慢吐氣：我先穩一下，再開口。", out:"先停一下：我不在這裡對抗。", night:"留出口：明天再談也可以。"},
-      {home:"我可以清楚，也可以尊重。", out:"我可以清楚，也可以尊重。", night:"我先收住語氣，再說。"},
-      {home:"先不搶輸贏，先保關係。", out:"先不搶輸贏，先保關係。", night:"先降張力，再談事。"}
-    ],
-    tips:[
-      {cat:"panic", title:"我快爆了（先降張力）", items:[
-        {home:"我先停一下，等一下再談。", out:"我先停一下，我們換個地方。", night:"我先穩一下，明天再談也可以。"},
-        {home:"我需要先穩住，才不會說傷人的話。", out:"我需要先穩住，我會回來。", night:"我先穩住，我還在。"}
-      ]},
-      {cat:"cry", title:"孩子崩潰/委屈（先承接）", items:[
-        {home:"我在，我先聽你說，不急著評價。", out:"我在，我先聽你說。", night:"我在，我先聽你說。"},
-        {home:"你先休息一下，我等一下回來，我們再談。", out:"你先坐一下，我等一下回來。", night:"先睡，明天再談也可以。"}
-      ]},
-      {cat:"fight", title:"頂嘴/對抗（先退出戰場）", items:[
-        {home:"我不跟你對抗，我們等一下再談。", out:"我不在這裡對抗，我們換地方。", night:"我先停一下，明天再談。"},
-        {home:"我先回到大人的位置，等一下再說。", out:"我先回到大人的位置。", night:"我先穩住，再談。"}
-      ]},
-      {cat:"public", title:"公共/規範（先安全）", items:[
-        {home:"先安全，等一下再談原因。", out:"先做到安全，等一下再談。", night:"先停一下，等一下再談。"},
-        {home:"我會在，但我需要先穩住。", out:"我在，但我們先到旁邊。", night:"我在，我先穩一下。"}
-      ]}
-    ]
-  }
-};
-
-// ===== Default Rescue Line (customizable) =====
-const KEY_FAV = "hp_m1_fav_line_v2";
-const favInput = document.getElementById("favLine");
+// ---- LIB（保留你原本的機制）
+const LIB = (function(){
+  return window.__HP_M1_LIB_FULL__;
+})();
 
 function setAge(v){
   localStorage.setItem(KEY_AGE, v);
@@ -356,6 +247,10 @@ function updateRescueMeta(){
   rescueMeta.textContent = `年齡：${LIB[age].name}｜情境：${CTX_NAME[ctx]}`;
   tipHint.textContent = LIB[age].hint;
 }
+
+// ===== Default Rescue Line (customizable) =====
+const KEY_FAV = "hp_m1_fav_line_v2";
+const favInput = document.getElementById("favLine");
 
 function suggestedRescue(){
   const age = getAge();
@@ -553,8 +448,8 @@ function saveQuizHistory(arr){
 
 function scoreToAdvice(score){
   if(score <= 3){
-    return { title:"今天先救你自己（先穩再說）",
-      text:"建議：立刻做 60 秒急救；用安全延後語句；安排等待位。今天以『情緒不繼續升高』為目標。" };
+    return { title:"今天先照顧你自己（先穩再說）",
+      text:"建議：立刻做 60 秒急救；用安全延後語句；安排等待位。今天目標是：情緒不再往上衝。" };
   }
   if(score <= 7){
     return { title:"今天以「延後＋回位」為主",
@@ -624,7 +519,7 @@ btnQuizClear?.addEventListener("click", ()=>{
   showToast("已清除紀錄");
 });
 
-// Close rescue
+// Close rescue (ensure stop)
 document.getElementById("btnClose").addEventListener("click", ()=>{ closeOverlay(); stopRescue(); });
 document.getElementById("btnClose2").addEventListener("click", ()=>{ closeOverlay(); stopRescue(); });
 

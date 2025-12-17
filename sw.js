@@ -1,66 +1,47 @@
-const CACHE_NAME = "hp-m1-v3";
-
-const CORE_ASSETS = [
+const CACHE_NAME = "hp-m1-pwa-v3";
+const ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
-
-async function safeCacheAddAll(cache, urls) {
-  await Promise.all(
-    urls.map(async (url) => {
-      try {
-        const req = new Request(url, { cache: "reload" });
-        const res = await fetch(req);
-        if (res.ok) await cache.put(req, res.clone());
-      } catch (e) {
-        // 單一失敗不影響整體
-      }
-    })
-  );
-}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    (async () => {
-      const cache = await caches.open(CACHE_NAME);
-      await safeCacheAddAll(cache, CORE_ASSETS);
-      self.skipWaiting();
-    })()
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    (async () => {
-      const keys = await caches.keys();
-      await Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)));
-      await self.clients.claim();
-    })()
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((k) => (k === CACHE_NAME ? null : caches.delete(k))))
+    )
   );
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
-  if (event.request.mode === "navigate") {
+  const req = event.request;
+
+  // ✅ 重要：處理「導覽請求」(重新整理/直接開網址) 的離線回應
+  if (req.mode === "navigate") {
     event.respondWith(
-      (async () => {
-        try {
-          const fresh = await fetch(event.request);
-          const cache = await caches.open(CACHE_NAME);
-          cache.put("./index.html", fresh.clone());
-          return fresh;
-        } catch {
-          return (await caches.match("./index.html")) || new Response("Offline");
-        }
-      })()
+      fetch(req).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put("./index.html", copy));
+        return res;
+      }).catch(() => caches.match("./index.html"))
     );
     return;
   }
 
+  // 其他資源：cache-first，拿不到就去網路
   event.respondWith(
-    caches.match(event.request).then((res) => res || fetch(event.request))
+    caches.match(req).then((cached) => cached || fetch(req))
   );
 });

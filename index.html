@@ -8,8 +8,8 @@
   <title>幸福教養｜模組1 大人先穩</title>
 
   <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="icon" href="./icons/icon-192.png" />
-  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <link rel="icon" href="./圖示/icon-192.png" />
+  <link rel="apple-touch-icon" href="./圖示/icon-192.png" />
 
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -21,6 +21,19 @@
         <div class="kicker">幸福教養｜不打不罵不氣</div>
         <h1>模組 1｜大人先穩</h1>
         <p class="sub">不用威嚇｜以愛連結｜先穩住，再說</p>
+
+        <!-- ✅ 安裝提示（含 icon） -->
+        <div class="install-hint" id="installHint">
+          <img src="./圖示/icon-512.png" alt="App icon" class="install-icon" />
+          <div class="install-text">
+            <div class="install-title">📱 建議安裝使用</div>
+            <div class="install-line">安卓／三星：Chrome 或 三星網路 →「加入主畫面」</div>
+            <div class="install-line">iPhone：Safari →「分享」→「加入主畫面」</div>
+            <div class="install-actions">
+              <button class="btn miniBtn" id="btnShowInstallGuide" type="button">看安裝教學</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="right">
@@ -45,11 +58,8 @@
         </div>
 
         <div class="quick">
-          <!-- ✅ 安裝提示鈕（Android 支援 beforeinstallprompt 才會顯示） -->
+          <!-- ✅ Android 可用的安裝按鈕（beforeinstallprompt 才會顯示） -->
           <button class="btn primary installBtn" id="btnInstall" hidden>安裝到桌面</button>
-
-          <!-- ✅ 方案 B：永遠可用的「安裝提示」按鈕 -->
-          <button class="btn ghost" id="btnInstallHint">📱 安裝提示</button>
 
           <button class="btn primary" id="btnOpenRescue">我快撐不住了（急救）</button>
           <button class="btn ghost" id="btnStop">停止</button>
@@ -67,52 +77,6 @@
       <button class="tab" data-tab="t6" role="tab" aria-selected="false">微練功</button>
       <button class="tab" data-tab="t7" role="tab" aria-selected="false">每日自評</button>
     </nav>
-
-    <!-- ✅ 方案 B：安裝提示彈窗（含 512 icon） -->
-    <section class="overlay" id="installOverlay" aria-hidden="true">
-      <div class="overlayCard installCard">
-        <div class="overlayTop">
-          <div>
-            <div class="overlayTitle">📱 安裝到桌面（建議）</div>
-            <div class="muted small">安裝後：開啟更快、可離線、急救時不怕找不到</div>
-          </div>
-          <button class="x" id="btnInstallClose" aria-label="關閉">✕</button>
-        </div>
-
-        <div class="installHero">
-          <img class="installIcon" src="./icons/icon-512.png" alt="幸福教養 icon" />
-          <div class="installText">
-            <div class="installName">幸福教養｜模組 1 大人先穩</div>
-            <div class="muted mini">PWA（可安裝＋離線）</div>
-          </div>
-        </div>
-
-        <div class="miniCard">
-          <div class="miniTitle">安卓（Chrome／三星網路）</div>
-          <ol>
-            <li>右上角「⋮」選單</li>
-            <li>點「加入主畫面」或「安裝應用程式」</li>
-            <li>完成後桌面會出現圖示</li>
-          </ol>
-          <div class="mini muted">若你看到上方「安裝到桌面」按鈕，也可以直接按。</div>
-        </div>
-
-        <div class="miniCard">
-          <div class="miniTitle">iPhone（Safari）</div>
-          <ol>
-            <li>用 Safari 開啟此頁</li>
-            <li>點「分享」（方框上箭頭）</li>
-            <li>選「加入主畫面」</li>
-          </ol>
-          <div class="mini muted">iPhone 不會出現「安裝到桌面」按鈕，請用分享加入主畫面。</div>
-        </div>
-
-        <div class="overlayBtns bottom">
-          <button class="btn ghost" id="btnInstallCopyLink">複製此頁連結</button>
-          <button class="btn primary" id="btnInstallClose2">我知道了</button>
-        </div>
-      </div>
-    </section>
 
     <!-- 急救浮層 -->
     <section class="overlay" id="overlay" aria-hidden="true">
@@ -155,7 +119,7 @@
     </section>
 
     <main class="panels">
-      <!-- 0 整合流程 -->
+      <!-- 0 -->
       <section class="panel active" id="t0" role="tabpanel">
         <div class="card">
           <h2>整合流程（現場照走）</h2>
@@ -236,7 +200,7 @@
             <div class="miniCard">
               <div class="miniTitle">自問 2 秒</div>
               <ul>
-                <li>我現在是想「教」？還是想「對抗」？</li>
+                <li>我現在是想「教」？還是想「贏」？</li>
                 <li>我是在保護關係？還是在輸出情緒？</li>
               </ul>
             </div>
@@ -294,147 +258,4 @@
       <section class="panel" id="t4" role="tabpanel">
         <div class="card">
           <h2>工具 1-4｜孩子安全等待位</h2>
-          <p class="muted">不是處罰角落，是「情緒落點」。讓孩子有地方安放自己。</p>
-
-          <div class="big">不是不要你，我會回來</div>
-
-          <div class="grid">
-            <div class="miniCard">
-              <div class="miniTitle">等待位可以是</div>
-              <ul>
-                <li>沙發角落＋抱枕</li>
-                <li>房間喝水</li>
-                <li>畫畫 3 分鐘</li>
-                <li>抱玩偶／翻書</li>
-              </ul>
-            </div>
-            <div class="miniCard">
-              <div class="miniTitle">你要說清楚</div>
-              <ul>
-                <li>「你在這裡等」</li>
-                <li>「我會回來」</li>
-                <li>「等一下我們再處理」</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="quoteSet">
-            <div class="label">一鍵句（點一下＝複製＋套入急救句）</div>
-            <button class="chip" data-say="你先在安全的地方等一下，抱抱娃娃，我很快回來。">你先等一下…我很快回來</button>
-            <button class="chip" data-say="不是不要你，我會回來。你先坐這裡，等我們都穩一點。">不是不要你…等我們都穩一點</button>
-            <button class="chip" data-say="我先去穩一下，我會回來。你可以喝水、或坐著抱抱枕。">我先去穩一下…你可以喝水</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5 Tips -->
-      <section class="panel" id="t5" role="tabpanel">
-        <div class="card">
-          <h2>錦囊妙計（可直接急救）</h2>
-          <p class="muted">點一個錦囊：①複製 ②套用急救句 ③直接進 60 秒急救。</p>
-
-          <div class="pillRow">
-            <button class="pill active" data-cat="all">全部</button>
-            <button class="pill" data-cat="panic">我快爆了</button>
-            <button class="pill" data-cat="cry">孩子哭</button>
-            <button class="pill" data-cat="fight">頂嘴/不合作</button>
-            <button class="pill" data-cat="public">公共/規範</button>
-          </div>
-
-          <div id="tipsWrap"></div>
-        </div>
-      </section>
-
-      <!-- 6 Practice -->
-      <section class="panel" id="t6" role="tabpanel">
-        <div class="card">
-          <h2>平日微練功（每天 1 分鐘）</h2>
-          <p class="muted">每天一點點，讓「穩」進到身體。會依年齡 × 情境抽句。</p>
-
-          <div class="miniCard">
-            <div class="miniTitle">今日練功句（自動抽一句）</div>
-            <div class="practiceLine" id="practiceLine">載入中…</div>
-
-            <div class="ctaRow">
-              <button class="btn primary" id="btnNewPractice">換一句</button>
-              <button class="btn ghost" id="btnCopyPractice">複製</button>
-              <button class="btn primary" id="btnDonePractice">我完成了 ✅</button>
-            </div>
-
-            <div class="mini muted" id="practiceStatus">今日尚未打卡</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 7 Quiz -->
-      <section class="panel" id="t7" role="tabpanel">
-        <div class="card">
-          <h2>每日自評（30 秒）</h2>
-          <p class="muted">不是評分，是讓你知道今天要用「哪一種策略」。</p>
-
-          <form id="dailyQuiz">
-            <div class="q"><label>1) 今天身體能量：</label>
-              <select name="q1" required>
-                <option value="">請選</option><option value="2">還可以</option><option value="1">有點累</option><option value="0">很累</option>
-              </select>
-            </div>
-            <div class="q"><label>2) 我比較容易：</label>
-              <select name="q2" required>
-                <option value="">請選</option><option value="2">能停一下再說</option><option value="1">會忍住但很悶</option><option value="0">容易馬上反應</option>
-              </select>
-            </div>
-            <div class="q"><label>3) 孩子一失控，我內心常出現：</label>
-              <select name="q3" required>
-                <option value="">請選</option><option value="2">我知道怎麼帶回來</option><option value="1">我不想爆但很難</option><option value="0">我需要立刻止血</option>
-              </select>
-            </div>
-            <div class="q"><label>4) 今天我最需要的是：</label>
-              <select name="q4" required>
-                <option value="">請選</option><option value="2">維持連結</option><option value="1">清楚界線</option><option value="0">先救我自己</option>
-              </select>
-            </div>
-            <div class="q"><label>5) 我願意做一個最小動作：</label>
-              <select name="q5" required>
-                <option value="">請選</option><option value="2">呼吸 4/6 × 2</option><option value="1">延後語句 1 次</option><option value="0">設定等待位</option>
-              </select>
-            </div>
-
-            <div class="ctaRow">
-              <button class="btn primary" type="submit">送出自評</button>
-              <button class="btn ghost" type="button" id="btnQuizHistory">查看最近 7 天</button>
-              <button class="btn ghost" type="button" id="btnQuizClear">清除紀錄</button>
-            </div>
-          </form>
-
-          <div class="resultBox" id="quizResult" hidden>
-            <div class="resultTitle">今日建議</div>
-            <div class="resultText" id="quizText"></div>
-            <div class="ctaRow">
-              <button class="btn primary" id="btnGoRescue">直接急救</button>
-              <button class="btn ghost" id="btnGoTips">去錦囊妙計</button>
-            </div>
-          </div>
-
-          <div class="historyBox" id="quizHistory" hidden></div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="foot">
-      <span>模組 1｜大人先穩｜PWA（可安裝＋離線）</span>
-    </footer>
-
-    <div class="toast" id="toast" aria-live="polite"></div>
-  </div>
-
-  <script src="./app.js"></script>
-  <script>
-    // ✅ 註冊 Service Worker（PWA 核心）
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js");
-      });
-    }
-  </script>
-</body>
-                </html>
+          <p class

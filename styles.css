@@ -387,24 +387,38 @@ h1{margin:6px 0 4px; font-size:22px}
   transform:translateX(-50%) translateY(-6px);
 }
 
-/* ===== Install Modal (方案 B) ===== */
-.installCard{width:min(640px, 100%)}
-.installHero{
+/* ===== 安裝提示區塊（B）===== */
+.install-hint{
   display:flex;
   gap:12px;
   align-items:center;
   padding:12px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:linear-gradient(180deg,#fff, var(--pri2));
-  margin:12px 0;
+  border:1px dashed #f0c4ad;
+  border-radius:16px;
+  background:linear-gradient(180deg,#fff, #fff7f1);
+  margin-top:12px;
 }
-.installIcon{
-  width:72px; height:72px;
-  border-radius:18px;
-  border:1px solid #f0c4ad;
+.install-icon{
+  width:56px;
+  height:56px;
+  border-radius:14px;
+  border:1px solid #f2d7c7;
   background:#fff;
-  object-fit:cover;
+  box-shadow: 0 10px 26px rgba(0,0,0,.08);
 }
-.installName{font-weight:1000; font-size:14px}
-.installText{display:flex; flex-direction:column; gap:4px}
+.install-text{flex:1; min-width:0}
+.install-title{
+  font-weight:1000;
+  margin-bottom:4px;
+}
+.install-line{
+  font-size:13px;
+  line-height:1.5;
+  color:var(--muted);
+}
+.install-actions{margin-top:8px}
+.miniBtn{
+  padding:9px 12px;
+  border-radius:14px;
+  font-size:13px;
+  }

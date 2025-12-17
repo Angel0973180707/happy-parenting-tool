@@ -1,4 +1,5 @@
-const CACHE_NAME = "hp-m1-pwa-v3";
+const CACHE_NAME = "hp-m1-pwa-v1";
+
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,39 +10,37 @@ const ASSETS = [
   "./icons/icon-512.png"
 ];
 
+// 安裝：快取必要檔案
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS);
+    })
   );
   self.skipWaiting();
 });
 
+// 啟用：清掉舊快取
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => (k === CACHE_NAME ? null : caches.delete(k))))
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
     )
   );
   self.clients.claim();
 });
 
+// 讀取：先快取，沒有再走網路
 self.addEventListener("fetch", (event) => {
-  const req = event.request;
-
-  // ✅ 重要：處理「導覽請求」(重新整理/直接開網址) 的離線回應
-  if (req.mode === "navigate") {
-    event.respondWith(
-      fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put("./index.html", copy));
-        return res;
-      }).catch(() => caches.match("./index.html"))
-    );
-    return;
-  }
-
-  // 其他資源：cache-first，拿不到就去網路
   event.respondWith(
-    caches.match(req).then((cached) => cached || fetch(req))
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
   );
 });
